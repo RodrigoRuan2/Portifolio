@@ -3,7 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rodrigo Ruan — Dev Web</title>
+  <meta name="theme-color" content="#080810" />
+  <title>Rodrigo Ruan — Dev Web Full-Stack</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Portfólio de Rodrigo Ruan — Desenvolvedor web full-stack. Projetos em React, Node.js, Python e mais. Aberto a oportunidades de estágio, freela e projetos colaborativos." />
+  <meta name="author" content="Rodrigo Ruan" />
+  <meta name="keywords" content="Rodrigo Ruan, desenvolvedor web, portfolio, React, JavaScript, Node.js, full-stack, front-end, dev web" />
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Rodrigo Ruan — Dev Web Full-Stack" />
+  <meta property="og:description" content="Desenvolvedor web em formação. Projetos em React, Node.js e Python. Disponível para oportunidades." />
+  <meta property="og:image" content="img/eu.JPG" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rodrigo Ruan — Dev Web Full-Stack" />
+  <meta name="twitter:description" content="Desenvolvedor web em formação. Projetos em React, Node.js e Python." />
+  <meta name="twitter:image" content="img/eu.JPG" />
+
+  <!-- Favicon (emoji inline para não precisar de arquivo extra) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -19,12 +42,19 @@
   ============================================================ -->
   <nav id="navbar">
     <div class="nav-logo">RR<span>_</span></div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="#sobre">sobre</a></li>
       <li><a href="#projetos">projetos</a></li>
       <li><a href="#contato">contato</a></li>
     </ul>
-    <a href="#" class="btn-primary">curriculo</a>
+    <a href="https://www.linkedin.com/in/rodrigo-oliveira-141499258" target="_blank" rel="noopener" class="btn-primary nav-cta">curriculo</a>
+
+    <!-- Botão hambúrguer (visível só no mobile) -->
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <!-- ============================================================
@@ -65,7 +95,7 @@
           <div class="avatar-frame">
             <div class="scan-line"></div>
 
-            <img class="avatar-foto" src="img/eu.JPG" alt="Rodrigo Ruan" />
+            <img class="avatar-foto" src="img/eu.JPG" alt="Foto de perfil de Rodrigo Ruan" width="250" height="380" />
 
             <div class="hero-stats">
               <div class="stat-chip">
@@ -107,42 +137,41 @@
           </p>
         </div>
 
-        <div class="skills-grid fade-up">
-          <div class="skill-card">
-            <div class="skill-name">HTML &amp; CSS</div>
-            <div class="skill-level">// intermediário</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="75%"></div></div>
+        <div class="skills-stack fade-up">
+
+          <div class="skills-block">
+            <div class="skills-block-label">// stack principal</div>
+            <div class="skills-tags">
+              <span class="skill-tag">HTML</span>
+              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Vite</span>
+              <span class="skill-tag">Git &amp; GitHub</span>
+            </div>
           </div>
-          <div class="skill-card">
-            <div class="skill-name">JavaScript</div>
-            <div class="skill-level">// básico–intermediário</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="60%"></div></div>
+
+          <div class="skills-block">
+            <div class="skills-block-label">// explorando</div>
+            <div class="skills-tags">
+              <span class="skill-tag muted">Node.js</span>
+              <span class="skill-tag muted">Express</span>
+              <span class="skill-tag muted">Supabase</span>
+              <span class="skill-tag muted">PostgreSQL</span>
+              <span class="skill-tag muted">Python</span>
+              <span class="skill-tag muted">TypeScript</span>
+            </div>
           </div>
-          <div class="skill-card">
-            <div class="skill-name">React</div>
-            <div class="skill-level">// básico–intermediário</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="55%"></div></div>
+
+          <div class="skills-block">
+            <div class="skills-block-label">// ferramentas &amp; idiomas</div>
+            <div class="skills-tags">
+              <span class="skill-tag alt">Pacote Office</span>
+              <span class="skill-tag alt">Português (nativo)</span>
+              <span class="skill-tag alt">Inglês (intermediário)</span>
+            </div>
           </div>
-          <div class="skill-card">
-            <div class="skill-name">Python</div>
-            <div class="skill-level">// básico–intermediário</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="50%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-name">Git &amp; GitHub</div>
-            <div class="skill-level">// básico</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="40%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-name">Pacote Office</div>
-            <div class="skill-level">// intermediário</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="65%"></div></div>
-          </div>
-          <div class="skill-card">
-            <div class="skill-name">Inglês</div>
-            <div class="skill-level">// intermediário</div>
-            <div class="skill-bar"><div class="skill-bar-fill" data-width="50%"></div></div>
-          </div>
+
         </div>
 
       </div>
@@ -159,11 +188,52 @@
 
       <div class="projects-grid">
 
+        <!-- ── PROJETO DESTAQUE: LUMEN ── -->
+        <div class="project-card featured fade-up">
+          <span class="featured-badge">★ DESTAQUE</span>
+          <span class="project-num">00</span>
+
+          <div class="featured-inner">
+            <div class="project-thumb featured-thumb">
+              <img class="project-img" src="img/lumen.png" alt="Captura de tela do Lumen E-commerce — plataforma full-stack com curadoria premium" width="1600" height="900" loading="lazy" />
+            </div>
+
+            <div class="project-body featured-body">
+              <div class="featured-label">// projeto principal</div>
+              <div class="project-title featured-title">Lumen E-commerce</div>
+              <p class="project-desc">
+                E-commerce full-stack com arquitetura cliente-servidor desacoplada.
+                Implementa autenticação JWT, fluxo de aprovação de vendedores e
+                rate-limiting no Express. Estado do carrinho persistido por usuário
+                no Supabase + design system completo com tokens CSS e modo escuro.
+              </p>
+              <div class="project-tags">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Express</span>
+                <span class="tag">Vite</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">React Router</span>
+                <span class="tag">React Leaflet</span>
+                <span class="tag">Rate Limiting</span>
+                <span class="tag">Full-Stack</span>
+                <span class="tag">Design System</span>
+                <span class="tag">Dark Mode</span>
+              </div>
+              <div class="project-links">
+                <a href="https://rodrigoruan2.github.io/lumen-ecommerce/" target="_blank" class="project-link primary">Demo ao vivo</a>
+                <a href="https://github.com/RodrigoRuan2/lumen-ecommerce" target="_blank" class="project-link">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ── PROJETO 1 ── -->
         <div class="project-card fade-up">
           <span class="project-num">01</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/projeto1.png" alt="Quiz One Piece" />
+            <img class="project-img" src="img/projeto1.png" alt="Captura de tela do Quiz One Piece — quiz interativo em React" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -173,8 +243,9 @@
             </div>
             <div class="project-title">Quiz-Onepiece</div>
             <p class="project-desc">
-              Um quiz interativo inspirado no anime One Piece,
-              desenvolvido com React e Vite.
+              Quiz SPA com gerenciamento de estado via React Hooks, lógica de
+              pontuação progressiva e fluxo condicional entre telas. Build
+              otimizado com Vite e deploy estático no GitHub Pages.
             </p>
             <div class="project-links">
               <a href="https://rodrigoruan2.github.io/Quiz-Onepiece2/" class="project-link primary">Demo ao vivo</a>
@@ -187,7 +258,7 @@
         <div class="project-card fade-up">
           <span class="project-num">02</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/projeto2.png" alt="Pokedex" />
+            <img class="project-img" src="img/projeto2.png" alt="Captura de tela da Pokedex — aplicação que consome a PokeAPI" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -196,8 +267,9 @@
             </div>
             <div class="project-title">Pokedex</div>
             <p class="project-desc">
-              Uma pokedex interativa que consome a PokeAPI para exibir
-              informações de diversos pokémons.
+              Consumo da PokeAPI com Fetch nativo, paginação on-demand e
+              renderização de listas longas com foco em performance. Exercício
+              prático de manipulação assíncrona de dados em JavaScript puro.
             </p>
             <div class="project-links">
               <a href="https://rodrigoruan2.github.io/pokedex/" class="project-link primary">Demo ao vivo</a>
@@ -210,7 +282,7 @@
         <div class="project-card fade-up">
           <span class="project-num">03</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/projeto3.png" alt="Netflix Dashboard" />
+            <img class="project-img" src="img/projeto3.png" alt="Captura de tela do Netflix Dashboard — dashboard estilo Netflix com API do TMDB" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -221,7 +293,9 @@
             </div>
             <div class="project-title">Netflix-dashboard</div>
             <p class="project-desc">
-              Um dashboard estilo Netflix construído com React + Vite e a API do TMDB.
+              Catálogo de filmes/séries consumindo a API do TMDB. Implementa
+              carrosséis por categoria, busca em tempo real e persistência de
+              favoritos no Supabase com autenticação de usuário.
             </p>
             <div class="project-links">
               <a href="https://rodrigoruan2.github.io/netflix-dashboard/" class="project-link primary">Demo ao vivo</a>
@@ -234,8 +308,8 @@
         <div class="project-card fade-up">
           <span class="project-num">04</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/projeto4.png" alt="Tradutor OCR" />
-          </div>Y
+            <img class="project-img" src="img/projeto4.png" alt="Captura de tela do Tradutor OCR — ferramenta desktop em Python com Tesseract" width="1280" height="720" loading="lazy" />
+          </div>
           <div class="project-body">
             <div class="project-tags">
               <span class="tag">Python</span>
@@ -244,9 +318,9 @@
             </div>
             <div class="project-title">Tradutor OCR</div>
             <p class="project-desc">
-              Ferramenta desktop que captura texto de qualquer parte da tela
-              e traduz instantaneamente. Funciona em jogos, PDFs, vídeos e
-              qualquer programa.
+              Aplicação desktop em Python integrando Tesseract OCR com API de
+              tradução. Captura por seleção de área, hotkeys globais e interface
+              moderna com customtkinter — funciona sobre jogos, PDFs e vídeos.
             </p>
             <div class="project-links">
               <a href="https://github.com/RodrigoRuan2/tradutor-ocr" class="project-link primary">GitHub</a>
@@ -258,7 +332,7 @@
         <div class="project-card fade-up">
           <span class="project-num">05</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/Calendario de anime.png" alt="Calendario de anime" />
+            <img class="project-img" src="img/Calendario de anime.png" alt="Captura de tela do Calendário de Anime — aplicação React com Axios para acompanhar lançamentos" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -268,7 +342,9 @@
             </div>
             <div class="project-title">Calendario de anime</div>
             <p class="project-desc">
-              Aplicação web para acompanhar os lançamentos semanais de animes e visualizar a grade da temporada atual — com suporte a favoritos, status de assistindo e muito mais.
+              Tracker de animes integrando APIs públicas via Axios. Gerencia
+              múltiplos status (assistindo / favoritos / concluído) com
+              persistência local, grade semanal e filtros por temporada.
             </p>
             <div class="project-links">
               <a href="https://rodrigoruan2.github.io/anime-calendar-V3/" class="project-link primary">Demo ao vivo</a>
@@ -330,7 +406,7 @@
        FOOTER
   ============================================================ -->
   <footer>
-    <p>// feito por <strong>Rodrigo_ruan</strong> &mdash; 2026</p>
+    <p>// feito por <strong>Rodrigo_ruan</strong> &mdash; <span id="footerYear">2026</span></p>
   </footer>
 
   <script src="script.js"></script>

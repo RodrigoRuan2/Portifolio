@@ -23,6 +23,22 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
+/* ============================================================
+   ACESSIBILIDADE — respeita usuários com sensibilidade a movimento
+============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grid-bg, .scanlines { display: none; }
+  .glitch::before, .glitch::after { display: none; }
+  .avatar-frame .scan-line { display: none; }
+  .project-card { transform: none !important; }
+}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -492,7 +508,78 @@ nav.scrolled {
   font-size: 15.5px;
 }
 
-/* skills */
+/* ============================================================
+   SKILLS — pills agrupados por categoria
+============================================================ */
+.skills-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skills-block-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 8px rgba(0,245,255,0.4);
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--purple);
+  background: rgba(180,78,255,0.08);
+  color: var(--purple);
+  text-shadow: 0 0 8px rgba(180,78,255,0.5);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.skill-tag:hover {
+  background: rgba(180,78,255,0.18);
+  box-shadow: 0 0 14px rgba(180,78,255,0.3);
+  transform: translateY(-1px);
+}
+
+.skill-tag.muted {
+  border-color: var(--border2);
+  background: var(--surface);
+  color: var(--muted);
+  text-shadow: none;
+}
+
+.skill-tag.muted:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 12px rgba(0,245,255,0.2);
+  text-shadow: 0 0 8px rgba(0,245,255,0.5);
+}
+
+.skill-tag.alt {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--text);
+  opacity: 0.75;
+  text-shadow: none;
+}
+
+.skill-tag.alt:hover {
+  opacity: 1;
+  border-color: var(--purple);
+}
+
+/* mantido para compatibilidade (legado, não usado mais) */
 .skills-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -579,12 +666,69 @@ nav.scrolled {
 }
 
 .project-card {
+  --mx: 50%;
+  --my: 50%;
+  --tx: 0;
+  --ty: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: all 0.3s;
   position: relative;
+  transform: perspective(900px) rotateX(var(--ty)) rotateY(var(--tx)) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.3s, box-shadow 0.3s;
+  will-change: transform;
+}
+
+/* spotlight que segue o mouse */
+.project-card .spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s;
+  background: radial-gradient(
+    400px circle at var(--mx) var(--my),
+    rgba(180,78,255,0.22),
+    rgba(0,245,255,0.08) 30%,
+    transparent 65%
+  );
+  z-index: 3;
+  mix-blend-mode: screen;
+}
+
+.project-card:hover .spotlight { opacity: 1; }
+
+/* scan line varrendo a imagem no hover */
+.project-thumb .hover-scan {
+  position: absolute;
+  left: 0; right: 0;
+  height: 60px;
+  top: -60px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0,245,255,0.25) 45%,
+    rgba(0,245,255,0.5) 50%,
+    rgba(0,245,255,0.25) 55%,
+    transparent
+  );
+  z-index: 3;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+.project-card:hover .project-thumb .hover-scan {
+  animation: hoverScan 1.4s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes hoverScan {
+  0%   { top: -60px; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
 }
 
 .project-card::before {
@@ -599,8 +743,7 @@ nav.scrolled {
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(180,78,255,0.3);
+  border-color: rgba(180,78,255,0.4);
 }
 
 .project-card:hover::before {
@@ -736,6 +879,133 @@ nav.scrolled {
   box-shadow: 0 0 14px rgba(180,78,255,0.2);
 }
 
+/* ============================================================
+   CARD DESTAQUE (LUMEN)
+============================================================ */
+.project-card.featured {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* borda neon gradiente animada */
+.project-card.featured::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--purple) 0%,
+    var(--cyan) 25%,
+    var(--pink) 50%,
+    var(--purple) 75%,
+    var(--cyan) 100%
+  );
+  background-size: 300% 300%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: borderFlow 6s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes borderFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.project-card.featured:hover {
+  box-shadow: 0 0 40px rgba(180,78,255,0.25), 0 0 80px rgba(0,245,255,0.08);
+}
+
+/* badge "DESTAQUE" */
+.featured-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 5px 12px;
+  border-radius: 2px;
+  color: var(--bg);
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  box-shadow: 0 0 18px rgba(180,78,255,0.6), 0 0 8px rgba(0,245,255,0.5);
+  animation: badgePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(180,78,255,0.6), 0 0 8px rgba(0,245,255,0.5); }
+  50%      { box-shadow: 0 0 28px rgba(180,78,255,0.9), 0 0 16px rgba(0,245,255,0.7); }
+}
+
+/* layout interno: imagem + conteúdo */
+.featured-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: stretch;
+}
+
+.featured-thumb {
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 340px;
+  border-bottom: none;
+  border-right: 1px solid var(--border);
+}
+
+.featured-body {
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featured-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 8px rgba(0,245,255,0.5);
+}
+
+.featured-title {
+  font-size: 26px !important;
+  letter-spacing: 0.06em;
+  color: white;
+  text-shadow: 0 0 24px rgba(180,78,255,0.5);
+  margin-bottom: 0.9rem !important;
+}
+
+.project-card.featured .project-desc {
+  font-size: 15px;
+  margin-bottom: 1.25rem;
+}
+
+.project-card.featured .project-tags {
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .featured-inner { grid-template-columns: 1fr; }
+  .featured-thumb { min-height: 220px; border-right: none; border-bottom: 1px solid var(--border); }
+  .featured-body { padding: 1.5rem 1.25rem; }
+  .featured-title { font-size: 22px !important; }
+}
+
 /* número decorativo */
 .project-num {
   position: absolute;
@@ -843,12 +1113,93 @@ footer strong { color: var(--purple); }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
 /* ============================================================
+   BOTÃO HAMBÚRGUER (mobile)
+============================================================ */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  padding: 0 8px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nav-toggle:hover {
+  border-color: var(--purple);
+  box-shadow: 0 0 12px rgba(180,78,255,0.25);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--purple);
+  border-radius: 1px;
+  box-shadow: 0 0 6px rgba(180,78,255,0.6);
+  transition: transform 0.3s, opacity 0.2s;
+  transform-origin: center;
+}
+
+/* animação para "X" quando aberto */
+.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================
    RESPONSIVO
 ============================================================ */
 @media (max-width: 768px) {
   .hero-grid, #sobre .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
   .hero-right { display: none; }
   nav { padding: 1rem; }
-  .nav-links { display: none; }
   section { padding: 4rem 0; }
+
+  /* esconde CTA do navbar no mobile pra dar espaço */
+  .nav-cta { display: none; }
+
+  /* mostra o hambúrguer */
+  .nav-toggle { display: flex; }
+
+  /* menu mobile: dropdown sob o navbar */
+  .nav-links {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(8,8,16,0.98);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border2);
+    border-bottom: 1px solid var(--border2);
+    padding: 1rem 0;
+    transform: translateY(-150%);
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 30px rgba(180,78,255,0.08);
+  }
+
+  .nav-links.open { transform: translateY(0); }
+
+  .nav-links li { width: 100%; }
+
+  .nav-links a {
+    display: block;
+    padding: 0.9rem 2rem;
+    font-size: 13px;
+    border-left: 2px solid transparent;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .nav-links a:hover {
+    border-left-color: var(--purple);
+    background: rgba(180,78,255,0.05);
+  }
+
+  .nav-links a::after { display: none; }
 }
