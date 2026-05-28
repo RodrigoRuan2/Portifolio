@@ -26,10 +26,11 @@ navToggle.addEventListener('click', () => {
   navToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
 });
 
-// fecha o menu ao clicar em qualquer link
+// fecha o menu ao clicar em qualquer link (incluindo o nav-cta fora do ul)
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
+document.querySelector('.nav-cta')?.addEventListener('click', closeMenu);
 
 // fecha com a tecla ESC
 document.addEventListener('keydown', (e) => {
@@ -50,25 +51,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ============================================================
-//  Barras de skill — animam ao aparecer na tela
-// ============================================================
-const skillObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.skill-bar-fill').forEach((bar, i) => {
-        setTimeout(() => {
-          bar.style.width = bar.dataset.width;
-          bar.classList.add('visible');
-        }, 150 + i * 80);
-      });
-      skillObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.2 });
-
-document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
 
 // ============================================================
 //  Project cards — spotlight + tilt 3D + scan no hover
