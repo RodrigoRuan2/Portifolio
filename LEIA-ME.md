@@ -1,72 +1,44 @@
-# 📁 Estrutura do Projeto
+# Estrutura do Projeto
 
 ```
-portfolio-cyberpunk/
-├── index.html      ← HTML da página
-├── style.css       ← Todo o CSS (cores, layout, animações)
-├── script.js       ← JavaScript (scroll, animações)
-├── LEIA-ME.md      ← Este arquivo
-└── img/            ← Pasta para suas imagens (crie esta pasta!)
-    ├── foto-perfil.jpg
-    ├── projeto1.jpg
-    ├── projeto2.jpg
-    └── projeto3.jpg
+Portifolio-main/
+├── index.html          ← página principal
+├── style.css           ← CSS (cores, layout, animações)
+├── script.js           ← JS (navbar, hambúrguer, fade-up)
+├── img/                ← imagens usadas no portfólio
+└── trainer/            ← build do Trainer Card (React/Vite, estático)
+    ├── index.html
+    ├── assets/
+    ├── avatar.png
+    └── projetos/
 ```
 
 ---
 
-## 🖼️ Como adicionar sua FOTO DE PERFIL
+## Personalizar cores
 
-1. Crie a pasta `img/` na mesma pasta do `index.html`
-2. Coloque sua foto lá: `img/foto-perfil.jpg`
-3. No `index.html`, encontre este bloco e **apague** ele:
+Abra `style.css` e edite as variáveis no topo:
 
-```html
-<!-- REMOVA ESTE BLOCO quando adicionar sua foto -->
-<div class="avatar-placeholder">
-  <div class="avatar-icon">👤</div>
-  <span class="avatar-hint">// coloque sua foto<br/>em img/foto-perfil.jpg</span>
-</div>
+```css
+:root {
+  --purple:     #b44eff;   /* roxo principal */
+  --cyan:       #00f5ff;   /* ciano neon */
+  --pink:       #ff2d78;   /* rosa neon */
+  --bg:         #080810;   /* fundo */
+}
 ```
-
-4. No lugar, cole isto:
-
-```html
-<img class="avatar-foto" src="img/foto-perfil.jpg" alt="Seu Nome" />
-```
-
-✅ Pronto! O CSS já cuida do recorte, tamanho e efeitos automaticamente.
 
 ---
 
-## 🖼️ Como adicionar IMAGEM em um projeto
+## Adicionar um novo projeto
 
-1. Coloque o print do projeto em `img/projeto1.jpg`
-2. No `index.html`, dentro do projeto desejado, encontre a linha com o emoji:
-
-```html
-<span class="project-thumb-emoji">🌐</span>
-```
-
-3. Apague essa linha e cole no lugar:
-
-```html
-<img class="project-img" src="img/projeto1.jpg" alt="Nome do projeto" />
-```
-
-✅ A imagem vai preencher o card automaticamente com zoom suave ao passar o mouse.
-
----
-
-## ➕ Como adicionar um NOVO projeto
-
-Copie este bloco inteiro e cole dentro de `.projects-grid` no `index.html`:
+Cole este bloco dentro de `.projects-grid` no `index.html`:
 
 ```html
 <div class="project-card fade-up">
-  <span class="project-num">04</span>
+  <span class="project-num">06</span>
   <div class="project-thumb">
-    <img class="project-img" src="img/projeto4.jpg" alt="Nome do Projeto 4" />
+    <img class="project-img" src="img/meu-projeto.png" alt="Nome do Projeto" width="1280" height="720" loading="lazy" />
   </div>
   <div class="project-body">
     <div class="project-tags">
@@ -85,15 +57,14 @@ Copie este bloco inteiro e cole dentro de `.projects-grid` no `index.html`:
 
 ---
 
-## 🎨 Como mudar as cores
+## Atualizar o Trainer Card
 
-Abra o `style.css` e edite as variáveis no topo:
+O `trainer/` é um build estático gerado pelo projeto **portifolio Treiner-card**. Para atualizar:
 
-```css
-:root {
-  --purple: #b44eff;   /* roxo principal */
-  --cyan:   #00f5ff;   /* ciano neon */
-  --pink:   #ff2d78;   /* rosa neon */
-  --bg:     #080810;   /* cor de fundo */
-}
+```bash
+# 1. No projeto Treiner-card:
+npm run build
+
+# 2. Copiar o build para cá:
+# (apagar trainer/ antigo e colar o dist/ renomeado como trainer/)
 ```
