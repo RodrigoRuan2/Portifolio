@@ -1203,3 +1203,118 @@ footer strong { color: var(--purple); }
 
   .nav-links a::after { display: none; }
 }
+
+/* ============================================================
+   TRAINER CARD BANNER
+============================================================ */
+.nav-trainer-link {
+  color: var(--purple);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border: 1px solid var(--purple-dim);
+  border-radius: var(--radius);
+  transition: background 0.2s, color 0.2s;
+}
+.nav-trainer-link:hover {
+  background: var(--purple-dim);
+  color: #fff;
+}
+
+.trainer-card-banner {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #1a1428 0%, #241a38 60%, #13132a 100%);
+  border: 2px solid #7a4fd6 !important;
+  box-shadow: 0 0 24px rgba(122,79,214,0.3);
+}
+
+.trainer-banner-inner {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.trainer-banner-left {
+  flex: 1;
+  min-width: 260px;
+  padding: 1.5rem;
+}
+
+.trainer-banner-right {
+  flex: 0 0 auto;
+  padding: 1.5rem;
+}
+
+.trainer-preview-card {
+  background: #241a38;
+  border: 3px solid #7a4fd6;
+  border-radius: 12px;
+  width: 280px;
+  overflow: hidden;
+  font-family: 'Press Start 2P', 'Share Tech Mono', monospace;
+  box-shadow: 0 0 16px rgba(122,79,214,0.4);
+}
+
+.trainer-preview-header {
+  background: #2e2347;
+  border-bottom: 2px solid #7a4fd6;
+  padding: 10px 14px;
+  color: #e29bf0;
+  font-size: 0.5rem;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.trainer-preview-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #7a4fd6;
+  background: #2e2347;
+}
+
+.trainer-preview-tabs span {
+  flex: 1 0 auto;
+  padding: 7px 4px;
+  font-size: 0.38rem;
+  color: #c8a8e0;
+  text-align: center;
+  border-right: 1px solid #1a1428;
+}
+
+.trainer-preview-tabs span:first-child {
+  background: #7a4fd6;
+  color: #fff;
+}
+
+.trainer-preview-body {
+  padding: 14px;
+}
+
+.trainer-preview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.trainer-preview-row span:first-child {
+  color: #e29bf0;
+  font-size: 0.42rem;
+}
+
+.trainer-preview-row span:last-child {
+  background: #3a2c5a;
+  border: 1px solid #6b4fb0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: #ede4f7;
+  font-size: 0.4rem;
+}
+
+@media (max-width: 700px) {
+  .trainer-preview-card { width: 100%; }
+  .trainer-banner-right { width: 100%; }
+}
