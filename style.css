@@ -1318,3 +1318,50 @@ footer strong { color: var(--purple); }
   .trainer-preview-card { width: 100%; }
   .trainer-banner-right { width: 100%; }
 }
+
+/* ============================================================
+   CURSO CARD (seção sobre)
+============================================================ */
+.curso-block { margin-top: 4px; }
+
+.curso-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--purple);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.curso-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.curso-badge {
+  background: var(--purple-dim);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 3px 9px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.curso-status {
+  color: #4ade80;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
+.curso-titulo {
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+
+.curso-tags { display: flex; flex-wrap: wrap; gap: 6px; }
