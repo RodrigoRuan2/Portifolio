@@ -1365,3 +1365,9 @@ footer strong { color: var(--purple); }
 }
 
 .curso-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.curso-card + .curso-card { margin-top: 10px; }
+
+.curso-badge--ibm { background: #0f62fe; }
+
+.curso-status--done { color: var(--cyan); }
