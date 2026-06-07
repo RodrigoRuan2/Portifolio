@@ -18,7 +18,7 @@
 
 Portfólio pessoal com estética **cyberpunk/dark**, construído do zero em HTML, CSS e JavaScript puro — sem frameworks, sem dependências. Apresenta minha trajetória, stack e os projetos que desenvolvi, com foco em interfaces bem cuidadas e experiência do usuário.
 
-Inclui também um **Trainer Card** interativo feito em React + Vite, navegável por abas no estilo de jogo de RPG
+Inclui também um **Trainer Card** interativo feito em React + Vite, navegável por abas no estilo de jogo de RPG.
 
 ---
 
