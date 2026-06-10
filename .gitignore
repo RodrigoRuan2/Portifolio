@@ -1,0 +1,6 @@
+# Instruções locais do Claude Code — nunca enviar ao GitHub
+CLAUDE.md
+.claude/
+
+# Dependências (caso o projeto ganhe build no futuro)
+node_modules/

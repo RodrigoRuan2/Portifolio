@@ -4,8 +4,9 @@
 Portifolio-main/
 ├── index.html          ← página principal
 ├── style.css           ← CSS (cores, layout, animações)
-├── script.js           ← JS (navbar, hambúrguer, fade-up)
-├── img/                ← imagens usadas no portfólio
+├── script.js           ← JS (navbar, animações, partículas, formulário)
+├── i18n.js             ← dicionário de traduções PT/EN
+├── img/                ← imagens usadas no portfólio (WebP otimizado)
 └── trainer/            ← build do Trainer Card (React/Vite, estático)
     ├── index.html
     ├── assets/

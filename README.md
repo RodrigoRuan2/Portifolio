@@ -1,6 +1,6 @@
 <div align="center">
 
-![Hero](img/readme/apresentação.png)
+![Hero](img/readme/apresentacao.webp)
 
 # Rodrigo Ruan — Portfólio
 
@@ -20,17 +20,26 @@ Portfólio pessoal com estética **cyberpunk/dark**, construído do zero em HTML
 
 Inclui também um **Trainer Card** interativo feito em React + Vite, navegável por abas no estilo de jogo de RPG.
 
+### Destaques
+
+- 🌐 **Bilíngue PT/EN** — toggle de idioma com persistência no navegador
+- ⚡ **Performance** — imagens em WebP (~95% menores que os PNGs originais)
+- 🖥️ **Boot screen** estilo terminal (1x por sessão) + efeito typewriter no hero
+- ✨ **Animações** — partículas em canvas, contadores animados, stagger nas skills, glitch, tilt 3D, scrollspy e barra de progresso de leitura
+- ♿ **Acessível** — respeita `prefers-reduced-motion` e funciona sem JavaScript
+- 📬 **Formulário de contato** com fallback para e-mail
+
 ---
 
 ## Preview
 
 ### Seção de Projetos
 
-![Projetos](img/readme/projetos.png)
+![Projetos](img/readme/projetos.webp)
 
 ### Trainer Card
 
-![Trainer Card](img/readme/trainer_card.png)
+![Trainer Card](img/readme/trainer_card.webp)
 
 ---
 
