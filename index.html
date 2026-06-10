@@ -13,16 +13,46 @@
 
   <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rodrigoruan2.github.io/Portifolio/" />
   <meta property="og:title" content="Rodrigo Ruan — Dev Web Full-Stack" />
   <meta property="og:description" content="Desenvolvedor web em formação. Projetos em React, Node.js e Python. Disponível para oportunidades." />
-  <meta property="og:image" content="https://rodrigoruan2.github.io/Portifolio/img/eu.JPG" />
+  <meta property="og:image" content="https://rodrigoruan2.github.io/Portifolio/img/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="pt_BR" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Rodrigo Ruan — Dev Web Full-Stack" />
   <meta name="twitter:description" content="Desenvolvedor web em formação. Projetos em React, Node.js e Python." />
-  <meta name="twitter:image" content="https://rodrigoruan2.github.io/Portifolio/img/eu.JPG" />
+  <meta name="twitter:image" content="https://rodrigoruan2.github.io/Portifolio/img/og-image.jpg" />
+
+  <!-- JSON-LD: dados estruturados que ajudam o Google a entender quem você é -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rodrigo Ruan",
+    "url": "https://rodrigoruan2.github.io/Portifolio/",
+    "jobTitle": "Desenvolvedor Web Full-Stack",
+    "email": "mailto:ruancamisaazul@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Valparaíso de Goiás", "addressRegion": "GO", "addressCountry": "BR" },
+    "sameAs": [
+      "https://github.com/RodrigoRuan2",
+      "https://www.linkedin.com/in/rodrigo-oliveira-141499258"
+    ],
+    "knowsAbout": ["JavaScript", "React", "Node.js", "HTML", "CSS", "Python"]
+  }
+  </script>
+
+  <!-- Marca que o JS está ativo (o CSS usa .js para esconder elementos
+       que serão animados) e decide se mostra o boot screen (1x por sessão) -->
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (!sessionStorage.getItem('booted')) document.documentElement.classList.add('booting');
+    } catch (e) { /* sessionStorage pode falhar em modo privado */ }
+  </script>
 
   <!-- Favicon (emoji inline para não precisar de arquivo extra) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%23080810'/><rect width='100' height='100' rx='14' fill='none' stroke='%23b44eff' stroke-width='4'/><text x='50' y='68' font-family='monospace' font-weight='900' font-size='46' fill='%23b44eff' text-anchor='middle'>RR</text></svg>" />
@@ -34,6 +64,18 @@
 </head>
 <body>
 
+  <!-- Boot screen estilo terminal (aparece 1x por sessão, ~1.4s) -->
+  <div id="boot" aria-hidden="true">
+    <div class="boot-log">
+      <div class="boot-line"><span class="accent">&gt;</span> init <span class="accent">portfolio.sys</span> ....... <span class="ok">OK</span></div>
+      <div class="boot-line"><span class="accent">&gt;</span> loading modules .......... <span class="ok">OK</span></div>
+      <div class="boot-line"><span class="accent">&gt;</span> rendering interface ...... <span class="ok">OK</span></div>
+    </div>
+  </div>
+
+  <!-- Barra de progresso de leitura -->
+  <div id="scrollProgress" aria-hidden="true"></div>
+
   <div class="grid-bg"></div>
   <div class="scanlines"></div>
 
@@ -43,12 +85,17 @@
   <nav id="navbar">
     <div class="nav-logo">RR<span>_</span></div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#sobre">sobre</a></li>
-      <li><a href="#projetos">projetos</a></li>
-      <li><a href="#contato">contato</a></li>
+      <li><a href="#sobre" data-i18n="nav.sobre">sobre</a></li>
+      <li><a href="#projetos" data-i18n="nav.projetos">projetos</a></li>
+      <li><a href="#contato" data-i18n="nav.contato">contato</a></li>
       <li><a href="trainer/index.html" class="nav-trainer-link">trainer card</a></li>
     </ul>
-    <a href="https://www.linkedin.com/in/rodrigo-oliveira-141499258" target="_blank" rel="noopener" class="btn-primary nav-cta">curriculo</a>
+    <a href="https://www.linkedin.com/in/rodrigo-oliveira-141499258" target="_blank" rel="noopener" class="btn-primary nav-cta" data-i18n="nav.cv">curriculo</a>
+
+    <!-- Toggle de idioma PT/EN -->
+    <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+      <span class="lang-on">PT</span>/EN
+    </button>
 
     <!-- Botão hambúrguer (visível só no mobile) -->
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
@@ -62,13 +109,16 @@
        HERO
   ============================================================ -->
   <section id="hero">
+    <!-- Partículas conectadas (canvas leve, desenhado via JS) -->
+    <canvas id="heroParticles" aria-hidden="true"></canvas>
+
     <div class="container">
       <div class="hero-grid">
 
         <div>
           <div class="hero-tag">
             <span class="dot"></span>
-            STATUS: DISPONÍVEL PARA OPORTUNIDADES
+            <span data-i18n="hero.tag">STATUS: DISPONÍVEL PARA OPORTUNIDADES</span>
           </div>
 
           <h1 class="hero-name">
@@ -76,19 +126,21 @@
             <span class="line2">Ruan.</span>
           </h1>
 
-          <div class="hero-subtitle">
+          <!-- O conteúdo abaixo é o fallback sem JS; com JS ativo,
+               o texto é "digitado" letra a letra (efeito typewriter) -->
+          <div class="hero-subtitle" id="heroType">
             &gt; <span>dev_web</span>.init() <span>// front &amp; back</span>
           </div>
 
-          <p class="hero-desc">
+          <p class="hero-desc" data-i18n="hero.desc">
             Desenvolvedor web em formação, construindo interfaces e
             automações que funcionam de verdade. Dois anos de experiência
             em ambiente corporativo de alto volume. Sempre aprendendo.
           </p>
 
           <div class="hero-ctas">
-            <a href="#projetos" class="btn-primary">Ver projetos</a>
-            <a href="#contato" class="btn-outline">Entre em contato</a>
+            <a href="#projetos" class="btn-primary" data-i18n="hero.ctaProjects">Ver projetos</a>
+            <a href="#contato" class="btn-outline" data-i18n="hero.ctaContact">Entre em contato</a>
           </div>
         </div>
 
@@ -96,16 +148,16 @@
           <div class="avatar-frame">
             <div class="scan-line"></div>
 
-            <img class="avatar-foto" src="img/eu.JPG" alt="Foto de perfil de Rodrigo Ruan" width="250" height="380" />
+            <img class="avatar-foto" src="img/eu.webp" alt="Foto de perfil de Rodrigo Ruan" width="250" height="380" />
 
             <div class="hero-stats">
               <div class="stat-chip">
-                <strong>2+</strong>
-                anos exp.
+                <strong data-count="2" data-suffix="+">2+</strong>
+                <span data-i18n="hero.statYears">anos exp.</span>
               </div>
               <div class="stat-chip">
-                <strong>6+</strong>
-                projetos
+                <strong data-count="6" data-suffix="+">6+</strong>
+                <span data-i18n="hero.statProjects">projetos</span>
               </div>
             </div>
           </div>
@@ -120,18 +172,18 @@
   ============================================================ -->
   <section id="sobre">
     <div class="container">
-      <p class="section-label">sobre mim</p>
+      <p class="section-label" data-i18n="sobre.label">sobre mim</p>
       <div class="sobre-grid">
 
         <div class="sobre-texto fade-up">
-          <h2>Dev.<br/><span>Solucionador.</span><br/>Curioso.</h2>
-          <p>
+          <h2 data-i18n="sobre.h2">Dev.<br/><span>Solucionador.</span><br/>Curioso.</h2>
+          <p data-i18n="sobre.p1">
             Tenho 21 anos, moro em Valparaíso de Goiás e estou cursando
             Análise e Desenvolvimento de Sistemas. Trabalhei quase dois anos
             na Amazon, onde aprendi a resolver problemas rápido e operar
             sob pressão real.
           </p>
-          <p>
+          <p data-i18n="sobre.p2">
             Hoje canalizo essa bagagem para o desenvolvimento web —
             construindo interfaces, automatizando processos e aprendendo
             uma tecnologia nova a cada projeto.
@@ -141,7 +193,7 @@
         <div class="skills-stack fade-up">
 
           <div class="skills-block">
-            <div class="skills-block-label">// stack principal</div>
+            <div class="skills-block-label" data-i18n="skills.main">// stack principal</div>
             <div class="skills-tags">
               <span class="skill-tag">HTML</span>
               <span class="skill-tag">CSS</span>
@@ -153,7 +205,7 @@
           </div>
 
           <div class="skills-block">
-            <div class="skills-block-label">// explorando</div>
+            <div class="skills-block-label" data-i18n="skills.exploring">// explorando</div>
             <div class="skills-tags">
               <span class="skill-tag muted">Node.js</span>
               <span class="skill-tag muted">Express</span>
@@ -165,20 +217,20 @@
           </div>
 
           <div class="skills-block">
-            <div class="skills-block-label">// ferramentas &amp; idiomas</div>
+            <div class="skills-block-label" data-i18n="skills.tools">// ferramentas &amp; idiomas</div>
             <div class="skills-tags">
-              <span class="skill-tag alt">Pacote Office</span>
-              <span class="skill-tag alt">Português (nativo)</span>
-              <span class="skill-tag alt">Inglês (intermediário)</span>
+              <span class="skill-tag alt" data-i18n="skills.office">Pacote Office</span>
+              <span class="skill-tag alt" data-i18n="skills.portuguese">Português (nativo)</span>
+              <span class="skill-tag alt" data-i18n="skills.english">Inglês (intermediário)</span>
             </div>
           </div>
 
           <div class="skills-block curso-block">
-            <div class="skills-block-label">// cursos</div>
+            <div class="skills-block-label" data-i18n="skills.courses">// cursos</div>
             <div class="curso-card">
               <div class="curso-header">
                 <span class="curso-badge">Udemy</span>
-                <span class="curso-status">● em andamento</span>
+                <span class="curso-status" data-i18n="curso.inprogress">● em andamento</span>
               </div>
               <div class="curso-titulo">Machine Learning, Deep Learning, LLMs, IA Generativa, Redes Neurais, NLP e Agentes</div>
               <div class="curso-tags">
@@ -196,7 +248,7 @@
             <div class="curso-card">
               <div class="curso-header">
                 <span class="curso-badge">Udemy</span>
-                <span class="curso-status">● em andamento</span>
+                <span class="curso-status" data-i18n="curso.inprogress">● em andamento</span>
               </div>
               <div class="curso-titulo">Lógica de Programação — Do VisualG às principais linguagens</div>
               <div class="curso-tags">
@@ -211,7 +263,7 @@
             <div class="curso-card">
               <div class="curso-header">
                 <span class="curso-badge curso-badge--ibm">IBM</span>
-                <span class="curso-status curso-status--done">✓ concluído</span>
+                <span class="curso-status curso-status--done" data-i18n="curso.done">✓ concluído</span>
               </div>
               <div class="curso-titulo">Introduction to Data Science</div>
               <div class="curso-tags">
@@ -234,8 +286,8 @@
   ============================================================ -->
   <section id="projetos">
     <div class="container">
-      <p class="section-label">projetos</p>
-      <h2 class="fade-up">O que eu construí</h2>
+      <p class="section-label" data-i18n="proj.label">projetos</p>
+      <h2 class="fade-up" data-i18n="proj.h2">O que eu construí</h2>
 
       <div class="projects-grid">
 
@@ -244,13 +296,13 @@
           <div class="trainer-banner-inner">
             <div class="trainer-banner-left">
               <span class="featured-badge">⚡ TRAINER PROFILE</span>
-              <div class="project-title" style="margin-top:12px;">Ver meu Trainer Card</div>
-              <p class="project-desc">
+              <div class="project-title" data-i18n="trainer.title">Ver meu Trainer Card</div>
+              <p class="project-desc" data-i18n="trainer.desc">
                 Meu portfólio em formato de jogo de RPG — navegue pelo meu perfil,
                 skills, projetos e experiência como se fosse um Trainer do Pokémon.
               </p>
-              <div class="project-links" style="margin-top:18px;">
-                <a href="trainer/index.html" class="btn-primary">Abrir Trainer Card</a>
+              <div class="project-links">
+                <a href="trainer/index.html" class="btn-primary" data-i18n="trainer.open">Abrir Trainer Card</a>
               </div>
             </div>
             <div class="trainer-banner-right">
@@ -273,18 +325,18 @@
 
         <!-- ── PROJETO DESTAQUE: LUMEN ── -->
         <div class="project-card featured fade-up">
-          <span class="featured-badge">★ DESTAQUE</span>
+          <span class="featured-badge" data-i18n="featured.badge">★ DESTAQUE</span>
           <span class="project-num">00</span>
 
           <div class="featured-inner">
             <div class="project-thumb featured-thumb">
-              <img class="project-img" src="img/lumen.png" alt="Captura de tela do Lumen E-commerce — plataforma full-stack com curadoria premium" width="1600" height="900" loading="lazy" />
+              <img class="project-img" src="img/lumen.webp" alt="Captura de tela do Lumen E-commerce — plataforma full-stack com curadoria premium" width="1600" height="900" loading="lazy" />
             </div>
 
             <div class="project-body featured-body">
-              <div class="featured-label">// projeto principal</div>
+              <div class="featured-label" data-i18n="featured.label">// projeto principal</div>
               <div class="project-title featured-title">Lumen E-commerce</div>
-              <p class="project-desc">
+              <p class="project-desc" data-i18n="proj0.desc">
                 E-commerce full-stack com arquitetura cliente-servidor desacoplada.
                 Implementa autenticação JWT, fluxo de aprovação de vendedores e
                 rate-limiting no Express. Estado do carrinho persistido por usuário
@@ -316,7 +368,7 @@
         <div class="project-card fade-up">
           <span class="project-num">01</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/quiz-onepiece.png" alt="Captura de tela do Quiz One Piece — quiz interativo em React" width="1280" height="720" loading="lazy" />
+            <img class="project-img" src="img/quiz-onepiece.webp" alt="Captura de tela do Quiz One Piece — quiz interativo em React" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -325,7 +377,7 @@
               <span class="tag">JavaScript</span>
             </div>
             <div class="project-title">Quiz-Onepiece</div>
-            <p class="project-desc">
+            <p class="project-desc" data-i18n="proj1.desc">
               Quiz SPA com gerenciamento de estado via React Hooks, lógica de
               pontuação progressiva e fluxo condicional entre telas. Build
               otimizado com Vite e deploy estático no GitHub Pages.
@@ -341,7 +393,7 @@
         <div class="project-card fade-up">
           <span class="project-num">02</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/pokedex.png" alt="Captura de tela da Pokedex — aplicação que consome a PokeAPI" width="1280" height="720" loading="lazy" />
+            <img class="project-img" src="img/pokedex.webp" alt="Captura de tela da Pokedex — aplicação que consome a PokeAPI" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -349,7 +401,7 @@
               <span class="tag">HTML</span>
             </div>
             <div class="project-title">Pokedex</div>
-            <p class="project-desc">
+            <p class="project-desc" data-i18n="proj2.desc">
               Consumo da PokeAPI com Fetch nativo, paginação on-demand e
               renderização de listas longas com foco em performance. Exercício
               prático de manipulação assíncrona de dados em JavaScript puro.
@@ -365,7 +417,7 @@
         <div class="project-card fade-up">
           <span class="project-num">03</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/netflix-dashboard.png" alt="Captura de tela do Netflix Dashboard — dashboard estilo Netflix com API do TMDB" width="1280" height="720" loading="lazy" />
+            <img class="project-img" src="img/netflix-dashboard.webp" alt="Captura de tela do Netflix Dashboard — dashboard estilo Netflix com API do TMDB" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -375,7 +427,7 @@
               <span class="tag">API</span>
             </div>
             <div class="project-title">Netflix-dashboard</div>
-            <p class="project-desc">
+            <p class="project-desc" data-i18n="proj3.desc">
               Catálogo de filmes/séries consumindo a API do TMDB. Implementa
               carrosséis por categoria, busca em tempo real e persistência de
               favoritos no Supabase com autenticação de usuário.
@@ -400,7 +452,7 @@
               <span class="tag">customtkinter</span>
             </div>
             <div class="project-title">Tradutor OCR</div>
-            <p class="project-desc">
+            <p class="project-desc" data-i18n="proj4.desc">
               Aplicação desktop em Python integrando Tesseract OCR com API de
               tradução. Captura por seleção de área, hotkeys globais e interface
               moderna com customtkinter — funciona sobre jogos, PDFs e vídeos.
@@ -415,7 +467,7 @@
         <div class="project-card fade-up">
           <span class="project-num">05</span>
           <div class="project-thumb">
-            <img class="project-img" src="img/Calendario de anime.png" alt="Captura de tela do Calendário de Anime — aplicação React com Axios para acompanhar lançamentos" width="1280" height="720" loading="lazy" />
+            <img class="project-img" src="img/calendario-anime.webp" alt="Captura de tela do Calendário de Anime — aplicação React com Axios para acompanhar lançamentos" width="1280" height="720" loading="lazy" />
           </div>
           <div class="project-body">
             <div class="project-tags">
@@ -424,7 +476,7 @@
               <span class="tag">APIs</span>
             </div>
             <div class="project-title">Calendario de anime</div>
-            <p class="project-desc">
+            <p class="project-desc" data-i18n="proj5.desc">
               Tracker de animes integrando APIs públicas via Axios. Gerencia
               múltiplos status (assistindo / favoritos / concluído) com
               persistência local, grade semanal e filtros por temporada.
@@ -446,9 +498,31 @@
   <section id="contato">
     <div class="container">
       <div class="contato-inner">
-        <p class="section-label" style="justify-content:center;">contato</p>
-        <h2 class="fade-up">Vamos<br/><span>trabalhar juntos?</span></h2>
-        <p class="fade-up">Aberto a estágio, freela e projetos colaborativos.</p>
+        <p class="section-label" data-i18n="contato.label">contato</p>
+        <h2 class="fade-up" data-i18n="contato.h2">Vamos<br/><span>trabalhar juntos?</span></h2>
+        <p class="fade-up" data-i18n="contato.sub">Aberto a estágio, freela e projetos colaborativos.</p>
+
+        <!-- Formulário de contato (Formspree)
+             → Crie uma conta grátis em formspree.io, pegue seu ID
+               e troque SEU_ID na action abaixo.
+             → Enquanto o ID não for trocado, o JS abre o e-mail
+               preenchido como fallback (nada quebra). -->
+        <form class="contact-form fade-up" id="contactForm" action="https://formspree.io/f/SEU_ID" method="POST">
+          <div class="form-field">
+            <label for="cfName" data-i18n="form.name">nome</label>
+            <input type="text" id="cfName" name="name" required autocomplete="name" />
+          </div>
+          <div class="form-field">
+            <label for="cfEmail" data-i18n="form.email">e-mail</label>
+            <input type="email" id="cfEmail" name="email" required autocomplete="email" />
+          </div>
+          <div class="form-field">
+            <label for="cfMsg" data-i18n="form.msg">mensagem</label>
+            <textarea id="cfMsg" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" data-i18n="form.send">Enviar mensagem</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
 
         <div class="contact-links fade-up">
 
@@ -489,9 +563,10 @@
        FOOTER
   ============================================================ -->
   <footer>
-    <p>// feito por <strong>Rodrigo_ruan</strong> &mdash; <span id="footerYear">2026</span></p>
+    <p><span data-i18n="footer.madeby">// feito por</span> <strong>Rodrigo_ruan</strong> &mdash; <span id="footerYear">2026</span></p>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
 
 </body>
