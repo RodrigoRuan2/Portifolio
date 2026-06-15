@@ -724,6 +724,10 @@ nav.scrolled {
 .project-img {
   width: 100%;
   height: 100%;
+  /* contain mostra a imagem INTEIRA sem esticar; o que sobra da caixa 16:9
+     fica com o fundo escuro do .project-thumb (efeito de "moldura"). Sem
+     isto, o padrão é "fill", que distorce imagens fora do formato 16:9. */
+  object-fit: contain;
   object-position: center;
   inset: 0;
   z-index: 1;

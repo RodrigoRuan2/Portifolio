@@ -58,6 +58,7 @@ const I18N = {
       'proj3.desc': 'Catálogo de filmes/séries consumindo a API do TMDB. Implementa carrosséis por categoria, busca em tempo real e persistência de favoritos no Supabase com autenticação de usuário.',
       'proj4.desc': 'Aplicação desktop em Python integrando Tesseract OCR com API de tradução. Captura por seleção de área, hotkeys globais e interface moderna com customtkinter — funciona sobre jogos, PDFs e vídeos.',
       'proj5.desc': 'Tracker de animes integrando APIs públicas via Axios. Gerencia múltiplos status (assistindo / favoritos / concluído) com persistência local, grade semanal e filtros por temporada.',
+      'proj6.desc': 'Cronômetro de drop de baús para o jogo TBH: Task Bar Hero. Planejador de rota, guia das 120 fases, média real entre drops e dois temas com imagem de fundo — em React puro, com estado derivado e persistência no localStorage. Deploy automático via GitHub Actions.',
 
       'contato.label': 'contato',
       'contato.h2': 'Vamos<br/><span>trabalhar juntos?</span>',
@@ -115,6 +116,7 @@ const I18N = {
       'proj3.desc': 'Movie/TV catalog consuming the TMDB API. Implements category carousels, real-time search and favorites persisted in Supabase with user authentication.',
       'proj4.desc': 'Python desktop app integrating Tesseract OCR with a translation API. Area-selection capture, global hotkeys and a modern customtkinter UI — works over games, PDFs and videos.',
       'proj5.desc': 'Anime tracker integrating public APIs via Axios. Manages multiple statuses (watching / favorites / completed) with local persistence, weekly grid and season filters.',
+      'proj6.desc': 'Chest-drop timer for the game TBH: Task Bar Hero. Route planner, a guide to all 120 stages, real average between drops and two themes with background images — in plain React, with derived state and localStorage persistence. Automatic deploy via GitHub Actions.',
 
       'contato.label': 'contact',
       'contato.h2': "Let's<br/><span>work together?</span>",
