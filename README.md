@@ -4,7 +4,7 @@
 
 # Rodrigo Ruan — Portfólio
 
-**Dev Web Frontend*
+**Dev Web Frontend**
 
 [![Ver ao vivo](https://img.shields.io/badge/▶_Ver_ao_vivo-080810?style=for-the-badge&logo=github&logoColor=b44eff)](https://rodrigoruan2.github.io/Portifolio/)
 [![Trainer Card](https://img.shields.io/badge/⚡_Trainer_Card-1a1428?style=for-the-badge&logoColor=e29bf0)](https://rodrigoruan2.github.io/Portifolio/trainer/)
